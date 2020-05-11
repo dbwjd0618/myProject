@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myproject">
+
+	<select id="login" resultMap="accountMap">
+		select
+			member_ID, member_PWD
+		from
+			member
+		where
+			member_ID = #{memberID}
+	</select>
+	
+	<resultMap type="account" id="accountMap"></resultMap>
+
+	<select id="selectList" resultMap="gallaryMap">
+		select
+			*
+		from
+			board
+	</select>
+	
+	<resultMap type="gallary" id="gallaryMap"></resultMap>
+
+</mapper>
