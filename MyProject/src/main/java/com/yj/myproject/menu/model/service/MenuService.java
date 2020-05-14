@@ -7,5 +7,7 @@ import com.yj.myproject.menu.model.vo.Gallary;
 public interface MenuService {
 
 	List<Gallary> gallaryList();
+
+	List<Gallary> gallaryList(String boardCode);
 	
 }

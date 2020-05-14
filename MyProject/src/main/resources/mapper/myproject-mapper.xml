@@ -24,4 +24,11 @@
 	
 	<resultMap type="gallary" id="gallaryMap"></resultMap>
 
+	<select id="selectGallary" resultMap="gallaryMap">
+		select
+			*
+		from
+			post
+	</select>
+	
 </mapper>

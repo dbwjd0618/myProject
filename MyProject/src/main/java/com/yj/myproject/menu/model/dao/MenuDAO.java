@@ -8,4 +8,6 @@ public interface MenuDAO {
 
 	List<Gallary> gallaryList();
 
+	List<Gallary> gallaryList(String boardCode);
+
 }

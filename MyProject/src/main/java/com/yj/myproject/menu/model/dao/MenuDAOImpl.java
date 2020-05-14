@@ -18,4 +18,10 @@ public class MenuDAOImpl implements MenuDAO {
 	public List<Gallary> gallaryList() {
 		return sqlSession.selectList("myproject.selectList");
 	}
+
+	@Override
+	public List<Gallary> gallaryList(String boardCode) {
+		return sqlSession.selectList("myproject.selectGallary", boardCode);
+	}
+	
 }

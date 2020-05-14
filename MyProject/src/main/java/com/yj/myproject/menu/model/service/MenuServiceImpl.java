@@ -18,4 +18,9 @@ public class MenuServiceImpl implements MenuService {
 	public List<Gallary> gallaryList() {
 		return menuDAO.gallaryList();
 	}
+
+	@Override
+	public List<Gallary> gallaryList(String boardCode) {
+		return menuDAO.gallaryList(boardCode);
+	}
 }

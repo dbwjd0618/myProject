@@ -87,9 +87,8 @@
 								<div class="subnav">
 									<li class="subnavbtn">Gallary<i class="fa fa-caret-down"></i></li>
 									<div class="subnav-content">
-									<li><a href="">아아</a></li>
-									<c:forEach items="${gallary }" var="gallary">
-										<li><a href="${pageContext.request.contextPath }/gallary/gallaryList.do">${gallary.boardName }</a></li>
+									<c:forEach items="${gallaryList }" var="gallaryList">
+										<li><a href="${pageContext.request.contextPath }/gallary/gallaryList.do?boardCode=${gallaryList.boardCode}">${gallaryList.boardName }</a></li>
 									</c:forEach>
 									</div>
 								</div>
