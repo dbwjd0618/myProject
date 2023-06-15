@@ -21,6 +21,9 @@ public class Main {
 		int M = sc.nextInt();
 		sc.nextLine();
 		
+		int pocketS = 0;
+		int pocketE = 0;
+		
 		List<String> list = new ArrayList<>();
 		for(int i = 0; i < M; i ++) {
 			String s = sc.nextLine();
