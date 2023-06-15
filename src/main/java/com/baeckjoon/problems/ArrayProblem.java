@@ -20,7 +20,6 @@ public class ArrayProblem {
 	 * 2 2 2	: 2번 바구니에 2번 공(1 2 1 1 0)
 	 */
 	private static void putBall(Scanner sc) {
-		// TODO Auto-generated method stub
 		
 	}
 

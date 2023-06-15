@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="post">
+
+	<resultMap type="post" id="postMap">
+			<result column="board_code" property="boardCode"></result>
+			<result column="post_no" property="postNo"></result>
+			<result column="post_title" property="postTitle"></result>
+			<result column="post_writer" property="postWriter"></result>
+			<result column="post_content" property="postContent"></result>
+			<result column="post_write_time" property="postWriteTime"></result>
+		<collection property="attachment" ofType="Attachment">
+			<id column="file_no" property="fileNo"/>
+			<result column="board_code" property="boardCode"></result>
+			<result column="post_no" property="postNo"></result>
+			<result column="origin_filename" property="originFileName"></result>
+			<result column="new_filename" property="newFileName"></result>
+			<result column="upload_date" property="uploadDate"></result>
+			<result column="download_count" property="downloadCount"></result>
+			<result column="status" property="status"></result>
+		</collection>
+	</resultMap>
+
+	<select id="selectList" resultType="post">
+		select
+			*
+		from
+			board
+	</select>
+
+	<select id="selectPost" resultMap="postMap">
+		select 
+		    *
+		from (
+		    select
+			    rownum,
+			    P.board_code,
+			    P.post_no,
+			    A.new_filename,
+			    P.post_title,
+			    P.post_writer,
+			    P.post_content,
+			    P.post_write_time
+			from
+			    attachment A join post P on  A.post_no = P.post_no
+			    join member M on P.post_writer = M.member_ID
+			where
+			    P.board_code=#{boardCode}
+			    and
+    			M.grade='A'
+			order by
+			    P.post_no desc
+		)
+		where
+		    rownum <![CDATA[<]]>= 3
+	</select>
+	
+	<insert id="insertPost">
+		insert into 
+			post 
+		values (
+			#{boardCode}, 
+			seq_post_no.nextval, 
+			#{postTitle}, 
+			#{postContent}, 
+			#{postWriter}, 
+			default, 
+			default)
+		<selectKey keyProperty="postNo" resultType="_int" order="AFTER">
+			select seq_post_no.currval from dual
+		</selectKey>
+	</insert>
+	
+	<select id="listPost" resultMap="postMap">
+	  select 
+	  		board_code
+	  		, post_no
+		    , post_title
+		    , post_content
+		    , post_writer
+		    , post_write_time
+		from post
+	   where board_code = #{boardCode}
+	</select>
+	
+	<select id="listDetailPost" resultMap="postMap">
+		select 
+		    P.board_code
+		    , P.post_no
+		    , P.post_title
+		    , P.post_content
+		    , P.post_writer
+		    , P.post_write_time
+		    , A.new_filename
+		from post P
+		join attachment A on P.board_code = A.board_code and P.post_no = A.post_no
+		where P.board_code = #{boardCode}
+		and P.post_no = #{postNo}
+	</select>
+</mapper>

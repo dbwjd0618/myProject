@@ -1,0 +1,89 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<!-- header 선언 -->
+<%@ include file="/WEB-INF/views/common/header.jsp"%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- gallayList CSS -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/post.css">
+
+<div class="ftco-blocks-cover-1">
+	<div class="site-section-cover half-bg">
+		<div class="container">
+			<div class="row align-items-center justify-content-center">
+				<div class="col-lg-8">
+					<h1 class="mb-5 text-primary font-weight-bold" data-aos="fade-up">Here is <span>${param.boardCode}</span> Gallary.</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="site-section">
+	<div class="container">
+		<h2>리스트</h2>
+		<div class="btn-group float-right" style="margin-top: -50px;">
+			<button type="button" class="btn btn-outline-dark" onclick="goExcel();">엑셀</button>
+		</div>
+	</div>
+	<input type="hidden" name="boardCode" value="${param.boardCode}" />
+	<input type="hidden" name="postNo" value="${param.postNo}" />
+	<div class="container">
+		<table class="table table-hover">
+		<colgroup>
+			<col width="15%"/>
+			<col width="35%"/>
+			<col width="25%"/>
+			<col width="25%"/>
+		</colgroup>
+		<thead>
+			<tr>
+				<th class="text-center">순번</th>
+				<th class="text-center">제목</th>
+				<th class="text-center">작성자</th>
+				<th class="text-center">작성일</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach items="${listPost}" var="list" varStatus="status">
+				<tr>
+					<td class="text-center">${status.count}</td>
+					<td class="text-center"><a href="${pageContext.request.contextPath}/post/postDetailForm.do?boardCode=${list.boardCode}&postNo=${list.postNo}">${list.postTitle}</a></td>
+					<td class="text-center">${list.postWriter}</td>
+					<td class="text-center">${list.postWriteTime}</td>
+				</tr>
+			</c:forEach>
+		</tbody>
+		</table>
+	</div>
+</div>
+
+<script>
+
+function goExcel() {
+	var res = confirm("엑셀을 출력하시겠습니까?");
+	if(res == true) {
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/post/goExcel.do",
+			data : $("[name=boardCode]"),
+			dataType : "json",
+			type : "GET",
+	 		error : function(e) {
+	 			alert(e.responseText);
+	 		},
+			success : function(data) {
+				if(data.result == "success")
+					alert("엑셀출력 성공!");
+			}
+		});
+	
+	}
+	else alert("출력을 취소하였습니다.");
+}
+
+</script>
+
+<!-- footer 선언 -->
+<%@ include file="/WEB-INF/views/common/footer.jsp"%>

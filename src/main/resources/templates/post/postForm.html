@@ -1,0 +1,312 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<!-- header 선언 -->
+<%@ include file="/WEB-INF/views/common/header.jsp"%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- gallayList CSS -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/post.css">
+<style>
+#dropZone{
+	background-color : #cbc6c821;
+	width : 90%;
+	height : 200px;	
+	border : 1px dashed;
+	text-align : center;
+	padding : 87px 0;
+}
+</style>
+
+
+<div class="ftco-blocks-cover-1">
+	<div class="site-section-cover half-bg">
+		<div class="container">
+			<div class="row align-items-center justify-content-center">
+				<div class="col-lg-8">
+					<h1 class="mb-5 text-primary font-weight-bold" data-aos="fade-up">Here is <span>${param.boardCode}</span> Gallary.</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="site-section">
+	<div class="container">
+		<h2>Yujeong's</h2>
+		<!-- 글쓰기 시작 -->
+		<div class="btn-group float-right" style="margin-top: -50px;">
+			<button type="button" class="btn" data-toggle="modal" data-target="#myModal">글쓰기</button>
+			<button type="button" class="btn" onclick="goPostList('${param.boardCode}');">목차</button>
+		</div>
+						
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog modal-lg">
+			
+			<!-- Modal content -->
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Gallary Write</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<form action="${pageContext.request.contextPath}/post/postWrite.do" method="POST" enctype="multipart/form-data" name="form1">
+						<input type="hidden" name="boardCode" value="${param.boardCode}" />
+						<input type="hidden" name="postNo" value="0" />
+						<input type="hidden" name="postWriter" value="${memberLoggedIn.memberID}"/>
+						<table style="width:100%; margin: 10px 20px;" >
+							<tr>
+								<td>제목</td>
+								<td><input type="text" name="postTitle" style="width:90%;" placeholder="제목을 입력하세요" required/></td>
+							</tr>
+							<tr>
+								<td>첨부파일</td>
+								<td>
+									<input type="file" name="upFile" id="upFile"/>
+									<button type="button" class="addFile" onclick="addFile()">파일추가</button>
+								</td>
+							</tr>
+							<tr id="tr_attach_file">
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									<div id="dropZone">
+										첨부할 파일을 드래그 하세요
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>내용</td>
+								<td><textarea name="postContent" id="textarea" cols="79" rows="10" placeholder="내용을 입력하세요" required></textarea></td>
+							</tr>
+						</table>
+						<button class="btn btn-warning btn-lg">완료</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+  		<!-- 글쓰기 끝 -->
+  		
+  		<!-- 추가할 첨부파일  -->
+  		<table id="preset" style="display:none;">
+			<tr>
+				<td></td>
+				<td><input type="file" name="upFile" /></td>
+			</tr>  		
+  		</table>
+  		<!-- 추가할 첨부파일 끝! -->
+  		
+  		<!-- yujeong's view -->
+		<div class="row">
+			<c:forEach items="${postContents}" var="post" varStatus="vs" begin="0">
+			<div class="col-lg-4 col-md-6 mb-4">
+				<div class="post-entry-1 h-100">
+					<c:if test="${empty post.attachment[0].newFileName}">
+						<a href="${pageContext.request.contextPath}/post/postView.do"><img src="${pageContext.request.contextPath}/resources/images/사진없음.png" alt="image"
+							class="img-fluid picture">
+						</a>
+					</c:if>
+					<c:if test="${not empty post.attachment[0].newFileName}">
+						<a href="${pageContext.request.contextPath}/post/postView.do"> <img src="${pageContext.request.contextPath}/resources/upload/post/${post.attachment[0].newFileName}" alt="image"
+							class="img-fluid picture">
+						</a>
+					</c:if>
+						<div class="post-entry-1-contents">
+							<h5>no.${vs.count}</h5>
+							<h2><a href="${pageContext.request.contextPath}/post/postDetailForm.do?boardCode=${post.boardCode}&postNo=${post.postNo}">${post.postTitle}</a></h2>
+							<span class="meta d-inline-block mb-3">${post.postWriteTime}
+							<span class="mx-2">by</span> <a href="#">${post.postWriter}</a></span>
+							<p>${post.postContent}</p>
+						</div>
+				</div>
+			</div>
+			</c:forEach>
+		</div>
+	</div>
+</div>
+
+<div class="site-section">
+	<div class="container">
+		<h2>Member's</h2>
+		<!-- 글쓰기 시작 -->
+		<button type="button" class="create" data-toggle="modal" 
+				data-target="#myModal">글쓰기</button>
+				
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog modal-lg">
+			
+			<!-- Modal content -->
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Gallary Write</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<form action="${pageContext.request.contextPath}/post/postWrite.do" method="POST">
+						<table style="width:100%; margin: 10px 20px;" >
+							<tr>
+								<td>제목</td>
+								<td><input type="text" name="postTitle" style="width:90%;" placeholder="제목을 입력하세요"/></td>
+							</tr>
+							<tr>
+								<td>첨부파일</td>
+								<td><input type="file" name="originFilename" /></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><button type="button" id="addFile">파일추가</button></td>
+							</tr>
+							<tr>
+								<td>내용</td>
+								<td><textarea name="content" id="textarea" cols="86" rows="10" placeholder="내용을 입력하세요"></textarea></td>
+							</tr>
+						</table>
+						<button type="button" class="btn btn-warning btn-lg">완료</button>
+					</form>
+				</div>
+			</div>
+			
+			</div>
+		</div>
+  		<!-- 글쓰기 끝 -->
+		
+		
+		<!-- member's view -->
+		<div class="row">
+			<div class="col-lg-4 col-md-6 mb-4">
+				<div class="post-entry-1 h-100">
+					<a href="view.html"> <img src="${pageContext.request.contextPath}/resources/images/img_1.jpg" alt="Image"
+						class="img-fluid">
+					</a>
+					<div class="post-entry-1-contents">
+
+						<h2>
+							<a href="view.html">Lorem ipsum dolor sit amet</a>
+						</h2>
+						<span class="meta d-inline-block mb-3">July 17, 2019 <span
+							class="mx-2">by</span> <a href="#">Admin</a></span>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+							Dolores eos soluta, dolore harum molestias consectetur.</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 mb-4">
+				<div class="post-entry-1 h-100">
+					<a href="view.html"> <img src="${pageContext.request.contextPath}/resources/images/img_2.jpg" alt="Image"
+						class="img-fluid">
+					</a>
+					<div class="post-entry-1-contents">
+
+						<h2>
+							<a href="view.html">Lorem ipsum dolor sit amet</a>
+						</h2>
+						<span class="meta d-inline-block mb-3">July 17, 2019 <span
+							class="mx-2">by</span> <a href="#">Admin</a></span>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+							Dolores eos soluta, dolore harum molestias consectetur.</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-4 col-md-6 mb-4">
+				<div class="post-entry-1 h-100">
+					<a href="view.html"> <img src="${pageContext.request.contextPath}/resources/images/img_3.jpg" alt="Image"
+						class="img-fluid">
+					</a>
+					<div class="post-entry-1-contents">
+
+						<h2>
+							<a href="view.html">Lorem ipsum dolor sit amet</a>
+						</h2>
+						<span class="meta d-inline-block mb-3">July 17, 2019 <span
+							class="mx-2">by</span> <a href="#">Admin</a></span>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+							Dolores eos soluta, dolore harum molestias consectetur.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+<script>
+//$('#preset tr') : id=preset 에서 tr 요소 셀렉트 하여
+// form1 안에 이름이 tr_attach_file 인것 중 마지막 것 다음에 추가합니다.
+$(function(){
+	// 파일 드롭 다운
+	fileDropDown();
+	
+	// 파일 추가
+	var count = 0;
+	var fullcount =3;
+	
+	$(".addFile").on("click", function(){
+		count++;
+		if(count < fullcount) {
+			$('[name=form1] [id=tr_attach_file]:last').before($('#preset tr').clone());
+		} else {
+			alert("파일 추가는 3개까지만 가능합니다.")
+		}
+		
+	});
+	
+});
+
+// 파일 리스트 번호
+var fileIndex = 0;
+// 등록할 전체 파일 사이즈
+var ftotalFileSize = 0;
+// 파일 리스트
+var fileList = new Array();
+// 파일 사이즈 리스트
+var fileSizeList = new Array();
+// 등록 가능한 파일 사이즈 MB
+var uploadSize = 50;
+// 등록 가능한 총 파일 사이즈 MB
+var maxUploadSize = 500;
+
+function fileDropDown(){
+	var dropZone = $("#dropZone");
+	dropZone.on('dragover', function(e){
+		e.stopPropagation();
+		e.preventDefault();
+		// 드롭다운 영역 css
+		dropZone.css('background-color', 'red');
+	});
+	dropZone.on('drop', function(e){
+		e.preventDefault();
+		// 드롭다운 영역 css
+		dropZone.css('background-color', 'purple');
+		
+		var files = e.originalEvent.dataTransfer.files;
+		$("[name=postTitle]").val(files[0].name);
+		console.log(files);
+		if(files != null){
+			if(files.length < 1){
+				alert("폴더 업로드 불가");
+				return;
+			}
+			upFile.files = files;
+		}else{
+			alert("ERROR");
+		}
+	});
+}
+
+function goPostList(boardCode) {
+	window.location.href="${pageContext.request.contextPath}/post/listPost.do?boardCode=" + boardCode;
+}
+</script>
+
+
+
+
+<!-- footer 선언 -->
+<%@ include file="/WEB-INF/views/common/footer.jsp"%>

@@ -1,0 +1,102 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<%@ include file="/WEB-INF/views/common/header.jsp"%>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+<div class="site-section">
+	<form id="codeForm" name="codeForm">
+		<div class="container" style="margin-top:65px">
+			<h1>SETTING</h1>
+		</div>
+		<div class="container">
+			<button class="btn float-right btn-outline-secondary" 
+					style="margin: 0px 0px 8px 0px" type="button" onclick="insertCode();">Save</button>
+			<table class="table table-bordered">
+				<tr>
+					<td class="text-center" style="background-color: #efe35940;">코드그룹</td>
+					<td><input name="codeGroup" class="form-control h-50"type="text" /></td>
+					<td class="text-center" style="background-color: #efe35940;">코드값</td>
+					<td><input name="codeValue" class="form-control h-50" type="text" /></td>
+				</tr>
+				<tr>
+					<td class="text-center" style="background-color: #efe35940;">코드명</td>
+					<td><input name="codeName" class="form-control h-50" type="text" /></td>
+					<td class="text-center" style="background-color: #efe35940;">코드정렬</td>
+					<td><input name="codeOrder" class="form-control h-50" type="text" /></td>
+				</tr>
+				<tr>
+					<td class="text-center" style="background-color: #efe35940;">사용여부</td>
+					<td><input name="ynUse" class="form-control h-50" type="text" /></td>
+					<td class="text-center" style="background-color: #efe35940;">기타코드</td>
+					<td><input name="codeEtc" class="form-control h-50" type="text" /></td>
+				</tr>
+			</table>
+		</div>
+	</form>
+</div>
+
+<div class="site-section">
+	<div class="container">
+	<h2>CodeList</h2>
+	
+	<div class="input-group mb-3 justify-content-end">
+	  <div class="input-group-append">
+		<input type="text" class="form-control">
+	    <button class="btn btn-outline-secondary" type="button">Search</button>
+	  </div>
+	</div>
+	
+	<table class="table table-hover">
+	<thead>
+	   <tr>
+	      <th>code_group</th>
+	      <th>code_value</th>
+	      <th>code_name</th>
+	      <th>code_order</th>
+	      <th>yn_use</th>
+	   </tr>
+	 </thead>
+	 <tbody>
+	 	<c:forEach items="${codeList}" var="list">
+		   <tr>
+		      <td>${list.codeGroup}</td>
+		      <td>${list.codeValue}</td>
+		      <td>${list.codeName}</td>
+		      <td>${list.codeOrder}</td>
+		      <td>${list.ynUse}</td>
+		   </tr>
+	 	</c:forEach>
+	</table>
+	</div>
+</div>
+</body>
+
+<script>
+function insertCode() {
+	var cf = confirm("코드를 등록하시겠습니까?");
+	
+	if(cf == true) {
+		$.ajax({
+			url : "${pageContext.request.contextPath}/code/insertCode.do",
+			data : $("#codeForm").serialize(),
+			dataType :"json",
+			type : "POST",
+			success : function(data) {
+				alert("정상 등록되었습니다.");	
+				location.reload();
+			}
+		});
+		
+	} else {
+		alert("등록을 취소하였습니다.");
+	}
+}
+	
+</script>
+
+</html>

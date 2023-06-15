@@ -1,0 +1,114 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<!-- header 선언 -->
+<%@ include file="/WEB-INF/views/common/header.jsp"%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- gallayList CSS -->
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/gallary.css">
+<style>
+#dropZone{
+	background-color: yellow;
+	height:290px;
+	border:1px solid;
+	padding:10px;
+}
+
+</style>
+<body>
+
+<div class="ftco-blocks-cover-1">
+	<div class="site-section-cover half-bg">
+		<div class="container">
+			<div class="row align-items-center justify-content-center">
+				<div class="col-lg-8">
+					<h1 class="mb-5 text-primary font-weight-bold" data-aos="fade-up">
+						Here is <span class="typed-words">List</span>.
+					</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="site-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-4 col-md-6 mb-4">
+				<form action="" name="attachForm">
+					<input type="text" id="title" />
+					<button>등록</button>
+					<div id="dropZone"></div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>		
+</body>
+
+<script>
+	// 파일 리스트 번호
+	var fileIndex = 0;
+	// 등록할 전체 파일 사이즈
+	var ftotalFileSize = 0;
+	// 파일 리스트
+	var fileList = new Array();
+	// 파일 사이즈 리스트
+	var fileSizeList = new Array();
+	// 등록 가능한 파일 사이즈 MB
+	var uploadSize = 50;
+	// 등록 가능한 총 파일 사이즈 MB
+	var maxUploadSize = 500;
+	
+	$(function (){
+		// 파일 드롭 다운
+		fileDropDown();
+	});
+	
+	function fileDropDown(){
+		var dropZone = $("#dropZone");
+		//Drag 기능
+		dropZone.on('dragenter', function(e){
+			e.stopPropagation();
+			e.preventDefault();
+			// 드롭다운 영역 css
+			dropZone.css('background-color', '#E3F2FC');
+		});
+		dropZone.on('dragleave', function(e){
+			e.stopPropagation();
+			e.preventDefault();
+			// 드롭다운 영역 css
+			dropZone.css('background-color', '#FFFFFF');
+		});
+		dropZone.on('dragover', function(e){
+			e.stopPropagation();
+			e.preventDefault();
+			// 드롭다운 영역 css
+			dropZone.css('background-color', 'red');
+		});
+		dropZone.on('drop', function(e){
+			e.preventDefault();
+			// 드롭다운 영역 css
+			dropZone.css('background-color', 'white');
+			
+			var files = e.originalEvent.dataTransfer.files;
+			$("#title").val(files[0].name);
+			console.log(files[0]);
+			if(files != null){
+				if(files.length < 1){
+					alert("폴더 업로드 불가");
+					return;
+				}
+			}else{
+				alert("ERROR");
+			}
+		});
+}
+
+</script>
+
+<!-- footer 선언 -->
+<%@ include file="/WEB-INF/views/common/footer.jsp"%>
+</html>

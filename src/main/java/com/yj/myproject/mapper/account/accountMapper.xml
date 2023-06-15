@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="account">
+
+	<resultMap type="account" id="memberMap"/>
+	
+	<select id="login" resultMap="memberMap">
+		select
+			member_ID, member_PWD
+		from
+			member
+		where
+			member_ID = #{memberID}
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
