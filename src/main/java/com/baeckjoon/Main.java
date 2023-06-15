@@ -1,5 +1,7 @@
 package com.baeckjoon;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -16,5 +18,17 @@ public class Main {
 		 */
 		Scanner sc = new Scanner(System.in);
 
+		int M = sc.nextInt();
+		sc.nextLine();
+		
+		List<String> list = new ArrayList<>();
+		for(int i = 0; i < M; i ++) {
+			String s = sc.nextLine();
+			list.add(s);
+			
+			String[] arr = list.get(i).split(" ");
+		}
+		
+		System.out.println(list.toString());
 	}
 }
