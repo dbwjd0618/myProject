@@ -28,7 +28,6 @@ public class Main {
 		for(int i = 0; i < M; i ++) {
 			String s = sc.nextLine();
 			list.add(s);
-			
 			String[] arr = list.get(i).split(" ");
 		}
 		
