@@ -20,7 +20,28 @@ public class ArrayProblem {
 	 * 2 2 2	: 2번 바구니에 2번 공(1 2 1 1 0)
 	 */
 	private static void putBall(Scanner sc) {
+		String[] terms = sc.nextLine().split(" ");
+		int N = Integer.parseInt(terms[0]);
+		int M = Integer.parseInt(terms[1]);
 		
+		int[] baskets = new int[N];
+		int bskStart = 0;
+		int bskEnd = 0;
+		int numBall = 0;
+		
+		for(int i = 0; i < M; i ++) {
+			String[] arr = sc.nextLine().split(" ");
+			bskStart = Integer.parseInt(arr[0]);
+			bskEnd = Integer.parseInt(arr[1]);
+			numBall = Integer.parseInt(arr[2]);
+			
+			for(int j = bskStart-1; j <= bskEnd-1; j ++) {
+				baskets[j] = numBall;
+			}
+		}
+        for(int k = 0; k < baskets.length; k++) {
+            System.out.print(baskets[k] + " ");
+        }
 	}
 
 	/**
