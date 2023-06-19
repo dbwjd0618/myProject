@@ -8,11 +8,12 @@ public class Main {
 	public static void main(String[] args) {
 
 		/**
-		 * 5 4		: N(바구니의 개수) M(바구니에 공을 넣을 횟수)
-		 * 1 2 3	: 1~2번 바구니에 3번 공(3 3 0 0 0) 
-		 * 3 4 4	: 3~4번 바구니에 4번 공(3 3 4 4 0)
-		 * 1 4 1	: 1~4번 바구니에 1번 공(1 1 1 1 0)
-		 * 2 2 2	: 2번 바구니에 2번 공(1 2 1 1 0)
+		 * 처음 바구니에 들어있는 공의 숫자는 바구니의 번호와 같다.
+		 * 5 4 : N(바구니의 개수) M:(섞을 횟수)
+		 * 1 2 : 2 1 3 4 5
+		 * 3 4 : 2 1 4 3 5
+		 * 1 4 : 3 1 4 2 5
+		 * 2 2 : 3 1 4 2 5
 		 */
 		Scanner sc = new Scanner(System.in);
 		String[] terms = sc.nextLine().split(" ");
@@ -20,19 +21,18 @@ public class Main {
 		int M = Integer.parseInt(terms[1]);
 		
 		int[] baskets = new int[N];
-		int bskStart = 0;
-		int bskEnd = 0;
-		int numBall = 0;
+		for(int i = 0; i < baskets.length; i ++) {
+			baskets[i] = i+1;
+		}
 		
-		for(int i = 0; i < M; i ++) {
+		for(int j = 1; j <= M; j ++) {
 			String[] arr = sc.nextLine().split(" ");
-			bskStart = Integer.parseInt(arr[0]);
-			bskEnd = Integer.parseInt(arr[1]);
-			numBall = Integer.parseInt(arr[2]);
+			int bskStart = Integer.parseInt(arr[0]) - 1;
+			int bskEnd = Integer.parseInt(arr[1]) - 1;
 			
-			for(int j = bskStart-1; j <= bskEnd-1; j ++) {
-				baskets[j] = numBall;
-			}
+			int org = baskets[bskStart];
+			baskets[bskStart] = baskets[bskEnd];
+			baskets[bskEnd] = org;
 		}
         for(int k = 0; k < baskets.length; k++) {
             System.out.print(baskets[k] + " ");
