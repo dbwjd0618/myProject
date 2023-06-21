@@ -11,6 +11,23 @@ public class ArrayProblem {
 		countUp(sc);	// 10807. 개수 세기
 		putBall(sc);	// 10810. 공 넣기
 		changeBall(sc); // 10813. 공 바꾸기
+		missTask(sc);	// 5597. 과제 안내신 분
+	}
+
+	private static void missTask(Scanner sc) {
+		// submited에 30이 들어가는 경우 때문에 31로 생성
+		int[] students = new int[31];
+		
+		for(int j = 0; j < 28; j ++) {
+			int submited = sc.nextInt();
+			students[submited] = 1;
+		}
+		
+		for(int i = 1; i < students.length; i ++) {
+			if(students[i] != 1) {
+				System.out.println(i);
+			}
+		}
 	}
 
 	/**
