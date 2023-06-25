@@ -8,8 +8,44 @@ public class StringProblem {
 		Scanner sc = new Scanner(System.in);
 		stringTonumbersSum(sc);	// 11720. 숫자의 합
         searchAlphabet(sc);		// 10809. 알파벳 찾기
+        repeatWord(sc);			// 2675. 문자열 반복
 	}
 
+	/**
+	 * 2
+	 * 3 ABC
+	 * 5 /HTP
+	 * 
+	 * AAABBBCCC
+	 * /////HHHHHTTTTTPPPPP
+	 */
+	private static void repeatWord(Scanner sc) {
+		int N = sc.nextInt();
+		
+		String word = "";
+		String result = "";
+		for(int i = 0; i < N; i ++) {
+			int R = sc.nextInt();
+			word = sc.next();
+			
+			for(int j = 0; j < word.length(); j ++) {
+				char c = word.charAt(j);
+				for(int k = 0; k < R; k ++) {
+					result += c;
+				}
+			}
+			result += "\r\n";
+		}
+		System.out.print(result.trim());
+		sc.close();
+	}
+
+	/**
+	 * baekjoon
+	 * a b  c  d e  f  g  h  i j k  l  m n o  p  q  r  s  t  u  v  w  x  y  z
+	 * 1 0 -1 -1 2 -1 -1 -1 -1 4 3 -1 -1 7 5 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+	 * @param sc
+	 */
 	private static void searchAlphabet(Scanner sc) {
 		String word = sc.nextLine();
 		
@@ -38,6 +74,12 @@ public class StringProblem {
 		sc.close();
 	}
 
+	/**
+	 * 입력으로 주어진 숫자 N개의 합을 출력한다.
+	 * 
+	 * 5
+	 * 54321 -> 15
+	 */
 	private static void stringTonumbersSum(Scanner sc) {
 		int N = sc.nextInt();
 		String sentence = sc.next();

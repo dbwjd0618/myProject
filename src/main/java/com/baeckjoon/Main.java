@@ -6,35 +6,29 @@ public class Main {
 	public static void main(String[] args) {
 	
 		/**
-		 * baekjoon
-		 * a b  c  d e  f  g  h  i j k  l  m n o  p  q  r  s  t  u  v  w  x  y  z
-		 * 1 0 -1 -1 2 -1 -1 -1 -1 4 3 -1 -1 7 5 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+		 * 2
+		 * 3 ABC
+		 * 5 /HTP
 		 */
+		
 		Scanner sc = new Scanner(System.in);
-		String word = sc.nextLine();
+		int N = sc.nextInt();
 		
-		// 26개
-		String[] arr = new String[26];
-		char c = ' ';
-		int j = 0;
-		for(char i = 97; i < 123; i ++) {
-			c = i;
-			arr[j] = String.valueOf(c);
-			j ++;
-		}
-		
+		String word = "";
 		String result = "";
-		for(int m = 0; m < arr.length; m ++) {
-			String alpha = arr[m];
+		for(int i = 0; i < N; i ++) {
+			int R = sc.nextInt();
+			word = sc.next();
 			
-			if(word.contains(alpha)) {
-				arr[m] = String.valueOf(word.indexOf(alpha));
-			} else {
-				arr[m] = "-1";
+			for(int j = 0; j < word.length(); j ++) {
+				char c = word.charAt(j);
+				for(int k = 0; k < R; k ++) {
+					result += c;
+				}
 			}
-			result += arr[m] + " ";
+			result += "\r\n";
 		}
-		System.out.println(result.trim());
+		System.out.print(result.trim());
 		sc.close();
 	}
 }
