@@ -9,6 +9,24 @@ public class StringProblem {
 		stringTonumbersSum(sc);	// 11720. 숫자의 합
         searchAlphabet(sc);		// 10809. 알파벳 찾기
         repeatWord(sc);			// 2675. 문자열 반복
+        countOfWord(sc);		// 1152. 단어의 개수
+	}
+
+	/**
+	 * The Curious Case of Benjamin Button -> 6
+	 * " " -> 0
+	 */
+	private static void countOfWord(Scanner sc) {
+		String content = sc.nextLine().trim();
+		String[] arr = content.split(" ");
+		
+		
+		if(arr.length == 1 && "".equals(arr[0]))
+			System.out.println(0);
+		else
+			System.out.println(arr.length);
+		
+		sc.close();		
 	}
 
 	/**

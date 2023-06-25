@@ -1,6 +1,5 @@
 package com.baeckjoon;
 
-import java.util.Arrays;
 import java.util.Scanner;
 public class Main {
 	
@@ -11,14 +10,15 @@ public class Main {
 		 * The Curious Case of Benjamin Button -> 6
 		 */
 		Scanner sc = new Scanner(System.in);
-		String content = sc.next();
+		String content = sc.nextLine().trim();
+		String[] arr = content.split(" ");
 		
-		String[] arr = null;
-		arr = content.split(" ");
-		
-		System.out.println(Arrays.toString(arr));
-		System.out.println(arr.length);
+		if(arr.length == 1 && "".equals(arr[0]))
+			System.out.println(0);
+		else
+			System.out.println(arr.length);
 		
 		sc.close();
 	}
 }
+
