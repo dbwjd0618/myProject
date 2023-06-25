@@ -1,13 +1,11 @@
 package com.baeckjoon;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
 	
-	@SuppressWarnings("resource")
 	public static void main(String[] args) {
-		
+	
 		/**
 		 * 10811.i~j번까지의 바구니를 역순으로 정렬
 		 * 5 4 : N(바구니), M(횟수)
@@ -18,34 +16,29 @@ public class Main {
 		 */
 		
 		Scanner sc = new Scanner(System.in);
-		String[] terms = sc.nextLine().split(" ");
-		int N = Integer.parseInt(terms[0]);
-		int M = Integer.parseInt(terms[1]);
 		
-		int[] backets = new int[N];
-		int[] tmp = new int[N];
-		
-		// 최초 데이터 세팅
-		for(int i = 0; i < N; i ++) {
+		int[] backets = new int[sc.nextInt()];
+		for(int i = 0; i < backets.length; i ++) {
 			backets[i] = i+1;
 		}
 		
-		tmp = backets;
+		int M = sc.nextInt();
 		for(int j = 0; j < M; j ++) {
-			String[] section = sc.nextLine().split(" ");
-			int start = Integer.parseInt(section[0])-1;
-			int end = Integer.parseInt(section[1])-1;
+			int s = sc.nextInt() - 1;
+			int e = sc.nextInt() - 1;
 			
-			if(end-start > 1) {
-				for(int k = 0; k <= end-start; k ++) {
-					backets[k] = tmp[end-k];
-				}
-			} else {
-				backets[start] = tmp[end];
-				backets[end] = tmp[start];
+			while(s < e) {
+				int tmp = backets[s];
+				backets[s++] = backets[e];
+				backets[e--] = tmp;
 			}
 		}
 		
-		System.out.println(Arrays.toString(backets));
+		String result = "";
+		for(int k = 0; k < backets.length; k ++) {
+			result += backets[k] + " ";
+		}
+		System.out.println(result.trim());
+		sc.close();
 	}
 }

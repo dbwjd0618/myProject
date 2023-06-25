@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * 백준 결과 성공여부에 관계없이 결과가 나온 코드를 작성
+ */
 public class ForProblem {
 
 	public static void main(String[] args) {

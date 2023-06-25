@@ -3,15 +3,61 @@ package com.baeckjoon.problems;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
+/**
+ * 백준 결과 성공여부에 관계없이 결과가 나온 코드를 작성
+ */
 public class ArrayProblem {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		countUp(sc);	// 10807. 개수 세기
-		putBall(sc);	// 10810. 공 넣기
-		changeBall(sc); // 10813. 공 바꾸기
-		missTask(sc);	// 5597. 과제 안내신 분
+		countUp(sc);		// 10807. 개수 세기
+		putBall(sc);		// 10810. 공 넣기
+		changeBall(sc); 	// 10813. 공 바꾸기
+		missTask(sc);		// 5597. 과제 안내신 분
+		backetsReverse(sc); // 10811. 바구니 뒤집기
+	}
+
+	private static void backetsReverse(Scanner sc) {
+		// 결과 값은 잘 출력되나 백준에 제출할 때 실패한 코드
+		String[] terms = sc.nextLine().split(" ");
+		int N = Integer.parseInt(terms[0]);
+		int M = Integer.parseInt(terms[1]);
+		
+		int[] backets = new int[N];
+		int[] tmp = new int[backets.length];
+		
+		// 최초 데이터 세팅
+		for(int i = 0; i < N; i ++) {
+			backets[i] = i+1;
+		}
+		
+		for(int j = 0; j < M; j ++) {
+			for(int k = 0; k < backets.length; k ++) {
+				tmp[k] = backets[k];
+			}
+			
+			String[] section = sc.nextLine().split(" ");
+			int start = Integer.parseInt(section[0])-1;
+			int end = Integer.parseInt(section[1])-1;
+			
+			if(end-start > 1) {
+				int gap = end - start;
+				for(int m = 0; m <= gap; m ++) {
+					backets[m] = tmp[end-start];
+					start++;
+				}
+			} else {
+				backets[start] = tmp[end];
+				backets[end] = tmp[start];
+			}
+		}
+		
+		String ret = "";
+		for (int n = 0; n < backets.length; n++) {
+			ret += backets[n] + " ";
+		}
+		System.out.print(ret.trim());
+		sc.close();
 	}
 
 	private static void missTask(Scanner sc) {
