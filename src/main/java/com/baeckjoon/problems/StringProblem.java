@@ -30,7 +30,6 @@ public class StringProblem {
 		int result = reverse1 > reverse2 ? reverse1 : reverse2;
 		
 		System.out.println(result);
-		
 		sc.close();
 	}
 

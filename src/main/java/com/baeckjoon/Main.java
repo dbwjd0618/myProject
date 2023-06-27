@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class Main {
 	
 	public static void main(String[] args) {
-
 		/**
 		 * 2908. 상수
 		 * 입력받은 각 숫자를 거꾸로 뒤집은 후에 값을 비교하여 큰값을 출력
