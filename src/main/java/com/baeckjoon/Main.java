@@ -6,24 +6,55 @@ public class Main {
 	
 	public static void main(String[] args) {
 		/**
-		 * 2908. 상수
-		 * 입력받은 각 숫자를 거꾸로 뒤집은 후에 값을 비교하여 큰값을 출력
-		 * 734 893 -> 437
+		 * 5622. 다이얼
+		 * 2 : ABC
+		 * 3 : DEF
+		 * 4 : GHI
+		 * 5 : JKL
+		 * 6 : MNO
+		 * 7 : PQRS
+		 * 8 : TUV
+		 * 9 : WXYZ
+		 * 
+		 * UNUCIC : 868242 => 36
 		 */
 		Scanner sc = new Scanner(System.in);
-		String s1 = sc.next();
-		String s2 = sc.next();
+		String word = sc.nextLine().toUpperCase();
 		
-		StringBuffer sb1 = new StringBuffer(s1);
-		int reverse1 = Integer.parseInt(sb1.reverse().toString());
-		
-		StringBuffer sb2 = new StringBuffer(s2);
-		int reverse2 = Integer.parseInt(sb2.reverse().toString());
+		int count = 0;
+		for(int i = 0; i < word.length(); i ++) {
+			char alphabet = word.charAt(i);
 
-		int result = reverse1 > reverse2 ? reverse1 : reverse2;
-		
-		System.out.println(result);
-		
+			switch(alphabet) {
+			case 'A' : case 'B' : case 'C' :
+				count += 3;
+				break;
+				
+			case 'D' : case 'E' : case 'F' : 
+				count += 4;
+				break;
+			case 'G' : case 'H' : case 'I' : 
+				count += 5;
+				break;
+			case 'J' : case 'K' : case 'L' : 
+				count += 6;
+				break;
+			case 'M' : case 'N' : case 'O' : 
+				count += 7;
+				break;
+			case 'P' : case 'Q' : case 'R' : case 'S' : 
+				count += 8; 
+				break;
+			case 'T' : case 'U' : case 'V' : 
+				count += 9;
+				break;
+			case 'W' : case 'X' : case 'Y' : case 'Z' : 
+				count += 10; 
+				break;
+				
+			}
+		}
+		System.out.println(count);
 		sc.close();
 	}
 }
