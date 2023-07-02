@@ -12,6 +12,14 @@ public class StringProblem {
         countOfWord(sc);		// 1152. 단어의 개수
         constantNumber(sc);		// 2908. 상수
         timeToDial(sc);			// 5622. 다이얼
+        literallyPrint(sc);		// 3003. 그대로 출력하기
+	}
+
+	private static void literallyPrint(Scanner sc) {
+		while(sc.hasNext()) {
+			System.out.println(sc.nextLine());
+		}
+		sc.close();
 	}
 
 	private static void timeToDial(Scanner sc) {
