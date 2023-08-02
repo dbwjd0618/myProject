@@ -6,15 +6,26 @@ public class Main {
 	
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		String orgWord = sc.next();
+		String word = sc.next().toUpperCase();
 		
-		StringBuffer sb = new StringBuffer(orgWord);
-		String newWord = sb.reverse().toString();
+		int[] cnt = new int[26];
 		
-		if(orgWord.equals(newWord))
-			System.out.println("1");
-		else
-			System.out.println("0");
+		for(int i = 0; i < word.length(); i ++) {
+			int num = word.charAt(i) - 'A';
+			cnt[num]++;
+		}
+		
+		int max = 0;
+		char result = '?';
+		for(int j = 0; j < cnt.length; j++) {
+			if(max < cnt[j]) {
+				max = cnt[j];
+				result = (char)(j+'A');
+			} else if(max == cnt[j]) {
+				result = '?';
+			}
+		}
+		System.out.println(result);
 		sc.close();
 	}
 }
