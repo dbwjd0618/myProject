@@ -5,15 +5,16 @@ import java.util.Scanner;
 public class Main {
 	
 	public static void main(String[] args) {
-		/**
-		 * 11718. 그대로 출력하기
-		 */
 		Scanner sc = new Scanner(System.in);
+		String orgWord = sc.next();
 		
-		while(sc.hasNext()) {
-			System.out.println(sc.nextLine());
-		}
+		StringBuffer sb = new StringBuffer(orgWord);
+		String newWord = sb.reverse().toString();
+		
+		if(orgWord.equals(newWord))
+			System.out.println("1");
+		else
+			System.out.println("0");
 		sc.close();
 	}
 }
-
