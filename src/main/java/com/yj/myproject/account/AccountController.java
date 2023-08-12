@@ -24,7 +24,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/account")
 @Slf4j
 @SessionAttributes(value = {"memberLoggedIn"})
-
 public class AccountController {
 	
 	@Autowired
@@ -33,43 +32,31 @@ public class AccountController {
 	@GetMapping("/login.do")
 	public String login() {
 		log.debug("login.do!!");
-		
 		return "account/login";
 	}
-	
 	
 	@PostMapping("/login.do")
 	public String login(@RequestParam("memberID") String memberID,
 		  			    @RequestParam("memberPWD") String memberPWD,
 		  			    Model model,
 		  			    RedirectAttributes redirectAttributes) {
-		
 		try	{
-			
 			Account account = accountService.login(memberID);
-			
 			if(account != null && memberPWD.equals(account.getMemberPWD())) {
 				//로그인 성공시
 				model.addAttribute("memberLoggedIn", account);
 				/* log.debug(memberID); */
-				
 				return "redirect:/";
 			} else {
 				//로그인 실패
 				String msg = "입력하신 계정이 일치하지 않습니다.";
-				
 				redirectAttributes.addFlashAttribute("msg", msg);
 				log.debug(msg);
 			}
-		
-		} 
-		
-		catch(Exception e) {
+		} catch(Exception e) {
 			log.error("로그인 처리 예외", e);
-			
 			throw new AccountException("로그인 중 오류가 발생하였습니다.", e);
 		}
-		
 		return "redirect:/account/login.do";
 	}
  
@@ -78,12 +65,9 @@ public class AccountController {
 	public String logout(SessionStatus sessionStatus,
 						 @ModelAttribute("memberLoggedIn") Account account,
 						 HttpSession session) {
-		
 		if(!sessionStatus.isComplete())
 			sessionStatus.setComplete();
-		
 		session.invalidate();
-		
 		return "redirect:/account/login.do";
 	}
 
